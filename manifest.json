@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "复制选择题内容",
+  "version": "1.0",
+  "description": "在app-format-html中添加按钮，点击复制格式化的选择题内容",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": ["activeTab"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "复制选择题内容"
+  }
+}
