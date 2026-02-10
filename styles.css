@@ -238,10 +238,3 @@
     width: 100%;
   }
 }
-/* 视频播放器控制条样式 */
-.vjs-control-bar {
-  bottom: unset !important;
-}
-.tcp-skin .vjs-progress-control {
-  top: -0.5em !important;
-}
