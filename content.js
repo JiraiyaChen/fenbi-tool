@@ -14,6 +14,12 @@
     };
   }
 
+  // ====== 删除 header-title 元素 ======
+
+  function removeHeaderTitles() {
+    document.querySelectorAll('.header-title').forEach((el) => el.remove());
+  }
+
   // ====== 选择题复制功能 ======
 
   // 处理单个 solution-choice-container 节点
@@ -194,6 +200,7 @@
   // 防抖 300ms 保证一次路由变化只触发一次扫描。
   const debouncedScan = debounce(function () {
     scanSolutionContainers(document);
+    removeHeaderTitles();
   }, 300);
 
   const globalObserver = new MutationObserver(function (mutations) {
@@ -210,6 +217,7 @@
 
   // 初始扫描：带重试机制（SPA 页面内容可能晚于脚本注入才渲染）
   function initScan() {
+    removeHeaderTitles();
     const found = document.querySelectorAll('.solution-choice-container');
     if (found.length > 0) {
       found.forEach(processSolutionContainer);
