@@ -330,7 +330,10 @@
     });
 
     canvas.addEventListener('mousemove', function (e) {
-      if (!_painting) return;
+      if (!_painting || !(e.buttons & 1)) {
+        _painting = false;
+        return;
+      }
       _drawCtx.beginPath();
       _drawCtx.moveTo(_lastPX, _lastPY);
       _drawCtx.lineTo(e.offsetX, e.offsetY);
@@ -346,10 +349,7 @@
       _lastPY = e.offsetY;
     });
 
-    canvas.addEventListener('mouseup', function () {
-      _painting = false;
-    });
-    canvas.addEventListener('mouseleave', function () {
+    document.addEventListener('mouseup', function () {
       _painting = false;
     });
 
