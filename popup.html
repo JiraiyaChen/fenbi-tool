@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <style>
       body {
-        width: 200px;
-        padding: 15px;
+        width: 220px;
+        padding: 16px;
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         font-size: 14px;
         line-height: 1.4;
@@ -14,41 +14,96 @@
       .header {
         text-align: center;
         color: #333;
-        margin-bottom: 15px;
+        margin-bottom: 16px;
         font-weight: 600;
+        font-size: 15px;
       }
 
-      .description {
-        color: #666;
-        margin-bottom: 15px;
-        text-align: center;
+      .toggle-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: #f5f5f5;
+        border-radius: 8px;
+        padding: 10px 14px;
+        margin-bottom: 12px;
       }
 
-      .status {
-        padding: 8px;
-        border-radius: 4px;
+      .toggle-label {
+        color: #444;
+        font-size: 13px;
+      }
+
+      /* Switch */
+      .switch {
+        position: relative;
+        width: 44px;
+        height: 24px;
+        flex-shrink: 0;
+      }
+
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+
+      .slider {
+        position: absolute;
+        inset: 0;
+        background: #ccc;
+        border-radius: 24px;
+        cursor: pointer;
+        transition: background 0.25s;
+      }
+
+      .slider::before {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        left: 3px;
+        top: 3px;
+        background: #fff;
+        border-radius: 50%;
+        transition: transform 0.25s;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+
+      input:checked + .slider {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      }
+
+      input:checked + .slider::before {
+        transform: translateX(20px);
+      }
+
+      .status-text {
         text-align: center;
         font-size: 12px;
-        background-color: #e8f5e8;
-        color: #2e7d32;
-        border: 1px solid #c8e6c9;
+        color: #888;
+        margin-top: 4px;
       }
 
       .version {
         text-align: center;
-        color: #999;
+        color: #bbb;
         font-size: 11px;
-        margin-top: 10px;
+        margin-top: 12px;
       }
     </style>
   </head>
   <body>
     <div class="header">复制选择题内容</div>
-    <div class="description">
-      在页面中找到 app-format-html
-      区域时，会自动添加复制按钮，格式化复制选择题内容。
+    <div class="toggle-row">
+      <span class="toggle-label" id="toggle-label">插件已开启</span>
+      <label class="switch">
+        <input type="checkbox" id="enable-toggle" checked />
+        <span class="slider"></span>
+      </label>
     </div>
-    <div class="status">✓ 扩展已激活</div>
+    <div class="status-text" id="status-text">复制按钮将自动注入页面</div>
     <div class="version">v1.0</div>
+    <script src="popup.js"></script>
   </body>
 </html>

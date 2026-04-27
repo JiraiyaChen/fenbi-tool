@@ -213,8 +213,6 @@
     }
   });
 
-  globalObserver.observe(document.body, { childList: true, subtree: true });
-
   // 初始扫描：带重试机制（SPA 页面内容可能晚于脚本注入才渲染）
   function initScan() {
     removeHeaderTitles();
@@ -229,9 +227,29 @@
 
   // ====== 初始化 ======
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initScan);
-  } else {
+  function enable() {
+    globalObserver.observe(document.body, { childList: true, subtree: true });
     initScan();
+  }
+
+  function disable() {
+    globalObserver.disconnect();
+    document.querySelectorAll('.copy-content-btn').forEach((el) => el.remove());
+  }
+
+  chrome.storage.local.get({ enabled: true }, function (result) {
+    if (result.enabled) {
+      enable();
+    }
+  });
+
+  chrome.storage.onChanged.addListener(function (changes) {
+    if (changes.enabled) {
+      changes.enabled.newValue ? enable() : disable();
+    }
+  });
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {});
   }
 })();
